@@ -1,3 +1,5 @@
 When /^I search for "([^"]*)"$/ do |query|
-  pending
+  visit("/search")
+  fill_in('query', :with => query)
+  click_button('Buscar')
 end
