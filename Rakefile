@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-School::Application.load_tasks
+Schooleando::Application.load_tasks
