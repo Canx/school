@@ -22,6 +22,12 @@ end
 
 gem 'jquery-rails'
 
+group :development do
+end
+
+group :test, :development do
+end
+
 group :test do
   gem 'cucumber-rails', '1.3.0'
   gem 'rspec-rails', '2.9.0'
@@ -41,4 +47,3 @@ end
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

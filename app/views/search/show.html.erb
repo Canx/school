@@ -3,4 +3,12 @@
     <input type="text" id="query" name="query" />
     <input type="submit" value="Buscar" />
   </fieldset>
+
+  <% if not(@schools.nil?) then %>
+  <ol class="results">
+    <% @schools.each do |school| %>
+      <li><%= school.name %></li>
+    <% end %>
+  </ol>
+  <% end %>
 </form>
