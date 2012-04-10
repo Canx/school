@@ -17,7 +17,7 @@ Feature: search
       | IES La Vereda  | Pobla de Vallbona |
       | IES Benicalap  | Valencia          |
       | CEIP Jaime I   | Peñíscola         |
-    When I search for schools in "Valencia" city
+    When I search for schools in "Peñíscola" city
     Then the results should be:
       | name           |
-      | IES Benicalap  |
+      | CEIP Jaime I   |

@@ -1,5 +1,10 @@
 class SearchController < ApplicationController
   def show
-    @schools = School.like(params[:query])
+    @schools = params[:query].nil? ? nil : search(params[:query], params[:tipoBusqueda])
+  end
+
+  private
+  def search(query, column)
+    School.like(query, column == "Ciudad" ? "city" : "name")
   end
 end

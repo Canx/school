@@ -1,14 +1,14 @@
-<form id="search" method="get" action="/search">
-  <fieldset>
-    <input type="text" id="query" name="query" />
-    <input type="submit" value="Buscar" />
-  </fieldset>
+<%= form_tag("/search", :method => "get") do %>
+  <%= search_field_tag("query") %>
+  <%= select_tag("tipoBusqueda", "<option>Nombre</option><option>Ciudad</option>".html_safe) %>
+  <%= submit_tag "Buscar" %>
+<% end %> 
 
-  <% if not(@schools.nil?) then %>
-  <ol class="results">
-    <% @schools.each do |school| %>
-      <li><%= school.name %></li>
-    <% end %>
-  </ol>
+<% if not(@schools.nil?) then %>
+<ol class="results">
+  <% @schools.each do |school| %>
+    <li><%= school.name %></li>
   <% end %>
-</form>
+</ol>
+<% end %>
+

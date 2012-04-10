@@ -4,6 +4,13 @@ When /^I search for schools with "([^"]*)" in its name$/ do |query|
   click_button('Buscar')
 end
 
+When /^I search for schools in "([^"]*)" city$/ do |city|
+  visit("/search")
+  fill_in('query', :with => city)
+  select('Ciudad', :from => 'tipoBusqueda')
+  click_button('Buscar')
+end
+
 Then /^the results should be:$/ do |expected_results|
   results = [["name"]] + page.all('ol.results li').map do |li|
     [li.text]
