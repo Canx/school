@@ -11,6 +11,12 @@ When /^I search for schools in "([^"]*)" city$/ do |city|
   click_button('Buscar')
 end
 
+When /^I search for schools of level "([^"]*)"$/ do |level|
+  visit("/search")
+  select(level, :from => 'nivel')
+  click_button('Buscar')
+end
+
 Then /^the results should be:$/ do |expected_results|
   results = [["name"]] + page.all('ol.results li').map do |li|
     [li.text]

@@ -26,6 +26,7 @@ group :development do
 end
 
 group :test, :development do
+  gem 'debugger'
 end
 
 group :test do
