@@ -1,16 +1,33 @@
 class SearchController < ApplicationController
   def show
     @schools = School.order("name")
-    unless params[:query].nil? 
-      @schools = @schools.like(params[:query], tipo(params[:tipoBusqueda]))
-    end
-    unless params[:nivel].nil?
-      @schools = @schools.joins(:levels).where(["level_id = ?", [params[:nivel]]])
-    end
+    @schools = search_by_name(params[:query], params[:tipoBusqueda])
+    @schools = search_by_city(params[:query], params[:tipoBusqueda])
+    @schools = search_by_level(params[:nivel])
   end
 
   private
-  def tipo(tipoBusqueda)
-    tipoBusqueda == "Ciudad" ? "city" : "name"
+  def search_by_city(city, tipoBusqueda)
+    if !city.nil? and tipoBusqueda == "Ciudad" then
+      @schools.joins(:city).where(:cities => {:name => city})
+    else
+      @schools
+    end
+  end
+
+  def search_by_name(name, tipoBusqueda)
+    if !name.nil? and tipoBusqueda == "Nombre" then
+      @schools.like(params[:query], "name")
+    else
+      @schools
+    end
+  end
+
+  def search_by_level(level)
+    if !level.nil?
+      @schools.joins(:levels).where(:levels => {:id => level})
+    else
+      @schools
+    end
   end
 end

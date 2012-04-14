@@ -1,0 +1,2 @@
+Feature: Show school
+

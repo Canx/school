@@ -1,9 +1,15 @@
 require 'factory_girl'
 
 FactoryGirl.define do
+  factory :city do
+    name 'Valencia'
+  end
+end
+
+FactoryGirl.define do
   factory :school do 
     name 'IES Prueba'
-    city 'Burjassot'
+    city
   end
 end
 

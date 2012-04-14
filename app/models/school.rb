@@ -1,5 +1,6 @@
 class School < ActiveRecord::Base
   has_and_belongs_to_many :levels
+  belongs_to :city
   attr_accessible :name
 
   def self.like(query, row)
