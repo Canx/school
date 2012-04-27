@@ -18,8 +18,8 @@ When /^I search for schools of level "([^"]*)"$/ do |level|
 end
 
 Then /^the results should be:$/ do |expected_results|
-  results = [["name"]] + page.all('ol.results li').map do |li|
-    [li.text]
+  results = [["name"]] + page.all('td#name').map do |td|
+    [td.text]
   end
   expected_results.diff!(results)
 end
