@@ -1,9 +1,11 @@
 class SearchController < ApplicationController
   def show
-    @schools = School.order("name")
-    @schools = search_by_name(params[:query], params[:tipoBusqueda])
-    @schools = search_by_city(params[:query], params[:tipoBusqueda])
-    @schools = search_by_level(params[:nivel])
+    if !params[:query].nil?
+      @schools = School.order("name")
+      @schools = search_by_name(params[:query], params[:tipoBusqueda])
+      @schools = search_by_city(params[:query], params[:tipoBusqueda])
+      @schools = search_by_level(params[:nivel])
+    end
   end
 
   private
