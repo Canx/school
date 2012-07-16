@@ -13,5 +13,5 @@ Feature: Show school
       | IES La Vereda | Pobla de Vallbona | Secundaria,Bachiller |
 
   Scenario: Show school
-    When I go to the show page for that school
+    When I go to the "IES La Vereda" school page
     Then I should see its name, city and levels

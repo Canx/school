@@ -1,4 +1,6 @@
 Schooleando::Application.routes.draw do
+  get "school/show"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
