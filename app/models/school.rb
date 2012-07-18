@@ -4,7 +4,4 @@ class School < ActiveRecord::Base
   validates :city, :presence => true
   attr_accessible :name
 
-  def self.like(query, row)
-    where(["schools.#{row} LIKE ?", "%#{query}%"])
-  end
 end

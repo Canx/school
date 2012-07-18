@@ -1,19 +1,7 @@
-When /^I search for schools with "([^"]*)" in its name$/ do |query|
-  visit("/search")
-  fill_in('query', :with => query)
-  click_button('Buscar')
-end
-
-When /^I search for schools in "([^"]*)" city$/ do |city|
+When /^I search for schools in "(.*?)" and level "(.*?)"$/ do |city, level|
   visit("/search")
   fill_in('query', :with => city)
-  select('Ciudad', :from => 'tipoBusqueda')
-  click_button('Buscar')
-end
-
-When /^I search for schools of level "([^"]*)"$/ do |level|
-  visit("/search")
-  select(level, :from => 'nivel')
+  select(level, :from => 'level')
   click_button('Buscar')
 end
 

@@ -15,7 +15,6 @@ Given /^there are the following school profiles:$/ do |schools|
           school.levels << Level.find_by_name!(level.strip)
       end
     end
-    
     school.save!
   end
 end
