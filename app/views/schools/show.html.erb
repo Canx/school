@@ -1,0 +1,14 @@
+<dl id="school">
+  <dt>Nombre:</dt>
+  <dd><%= @school.name %></dd>
+  <dt>Ciudad:</dt>
+  <dd><%= @school.city.name %></dd>
+  <dt>Niveles:</dt>
+  <dd>
+    <ul>
+  <% @school.levels.each do |level| %>
+    <li><%= level.name %></li>
+  <% end %>
+    </ul>
+  </dd>
+</dl>

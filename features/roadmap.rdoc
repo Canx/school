@@ -1,0 +1,15 @@
+== Versión 0.1
+ * Búsqueda básica por población y nivel.
+
+== Versión 0.2
+ * Filtro por tipo: privado/público
+
+== Versión 1.0
+ * Registro de usuarios.
+ * Comentarios y valoraciones de un centro.
+ * Ordenación de resultados por valoración/distancia haciendo click en la columna.
+
+== Versión 2.0
+ * Busqueda y resultados a través de mapa.
+ * Búsqueda con filtro de distancia máxima.
+ * Usuarios pueden añadir nuevos centros y validar centros

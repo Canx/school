@@ -28,7 +28,9 @@ end
 
 group :development do
   gem 'guard-cucumber'
+  gem 'guard-rspec'
   gem 'libnotify'
+  gem 'yard'
 end
 
 group :test, :development do
