@@ -1,20 +1,22 @@
 class SearchController < ApplicationController
+  def index
+  end
+
   def show
-    if !params[:query].nil?
+    if !params[:query].blank?
       @schools = School
       @schools = search_by_city(params[:query])
       @schools = search_by_level(params[:level])
+    else
+      flash[:notice] = "Debes introducir una localidad"
     end
   end
 
   private
+
   def search_by_city(city_query)
-    if !city_query.blank?
-      @schools = @schools.joins(:city).where(["cities.name LIKE ?", "#{city_query}%"])
-      @schools = @schools.order("cities.name ASC, name ASC")
-    end
-    # TODO: crear error y no continuar
-    @schools
+    @schools = @schools.joins(:city).where(["cities.name LIKE ?", "#{city_query}%"])
+    @schools = @schools.order("cities.name ASC, name ASC")
   end
 
   def search_by_level(level)

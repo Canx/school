@@ -5,7 +5,10 @@ Schooleando::Application.routes.draw do
   # first created -> highest priority.
 
   root :to => 'welcome#index'
-  match 'search' => 'search#show'
+
+  # Necesito dos rutas, una para la página inicial de busqueda y otra para los resultados.
+  match 'search' => 'search#index'
+  match 'results' => 'search#show'
   
   resources :schools
   # Sample of regular route:

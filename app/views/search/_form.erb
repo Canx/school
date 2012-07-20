@@ -1,5 +1,5 @@
-<%= form_tag(:controller => "search", :action => "show", :method => "get", :class => "well-shaped search") do %>
-  <input type="text" id="query" name="query" type="search" class="input-medium search-query">
-  <%= submit_tag("Buscar", :class => "btn btn-primary") %>
-<% end %>
-
+<%= form_tag("/results", :method => "get") do %>
+  <%= search_field_tag("query", params[:query]) %>
+  <%= select_tag(:level, options_from_collection_for_select(Level.all, :id, :name)) %>
+  <%= submit_tag "Buscar" %>
+<% end %> 
