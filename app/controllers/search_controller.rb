@@ -14,10 +14,14 @@ class SearchController < ApplicationController
   def search_by_city(city_query)
     if !city_query.blank?
       @schools = @schools.joins(:city).where(["cities.name LIKE ?", "#{city_query}%"])
+      if @schools.count == 0
+        flash[:error] =  "No se han encontrado centros en #{city_query}"
+        redirect_to :action => "index"
+      end
       @schools = @schools.order("cities.name ASC, name ASC")
     else
-      flash[:notice] = "Debes introducir una localidad"
-      render :index
+      flash[:error] = "Debes introducir una localidad"
+      redirect_to :action => "index"
     end
   end
 
