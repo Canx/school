@@ -12,6 +12,7 @@ describe SearchController do
       get 'show', :query => ""
       flash[:notice].should_not be_nil
     end
+
   end
 
 end
