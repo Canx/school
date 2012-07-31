@@ -6,11 +6,15 @@ Schooleando::Application.routes.draw do
 
   root :to => 'welcome#index'
 
-  # Necesito dos rutas, una para la página inicial de busqueda y otra para los resultados.
-  match 'search' => 'search#index'
-  match 'results' => 'search#show'
-  
+  match 'search' => 'search#index', :via => :get
+  match 'search' => 'search#show', :via => :post
+  #match 'search/:query' => 'search#show', :as => :results
+  #match 'search/city/:id' => 'search#city', :as => :city
+ 
   resources :schools
+  resources :cities
+  # TODO: crear ruta /cities/search
+
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
