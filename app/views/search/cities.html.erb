@@ -3,7 +3,11 @@
 <table>
   <% @cities.each do |city| %>
   <tr id="city_<%= city[:id] %>">
-    <td><a href="/cities/<%=city[:id] %>"><span id="name"><%= city[:name] %></span><span id="count">  (<%= city[:count] %>)</a></td>
+    <td>
+      <%= link_to city_path(city[:id], :level => @level), :id => city[:id] do %>
+        <span id="name"><%= city[:name] %></span> (<span id="count"><%= city[:count] %></span>)
+      <% end %>
+    </td>
   </tr>
   <% end %>
 </table>
