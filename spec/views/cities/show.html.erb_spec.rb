@@ -8,8 +8,12 @@ describe "cities/show.html.erb" do
       data.each do |row|
         @levels << stub_model(School, :id => row[0], :name => row[1], :total => row[2])
       end
+
+      @city = stub_model(City, :name => "Burjassot")
+
       assign(:levels, @levels)
       assign(:id, 1)
+      assign(:city, @city)
     end
 
     context "querying with an existing city" do
@@ -19,6 +23,7 @@ describe "cities/show.html.erb" do
           rendered.should have_selector("td##{level.id}") do |td|
             td.should contain(level.id)
             td.should contain(level.total)
+            td.should have_selector("a", href: city_level(1, level))
           end
         end
       end

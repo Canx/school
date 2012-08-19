@@ -1,4 +1,4 @@
-<h1>Centros de <%= @level.name %> en <%= @city.name %></h1>
+<h1><%= "#{@city.name}: centros de #{@level.name}" %></h1>
 <table>
   <% @schools.each do |school| %>
     <tr>

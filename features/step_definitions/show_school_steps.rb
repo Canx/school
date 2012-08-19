@@ -1,6 +1,6 @@
 When /^I go to the "(.*?)" school page$/ do |name|
     @school=School.find_by_name(name)
-    visit city_school_path(:city_id => @school.city.id, :id => @school.id)
+    visit school_path(:city_id => @school.city.id, :id => @school.id)
 end
 
 Then /^I should see its name, city and levels$/ do
