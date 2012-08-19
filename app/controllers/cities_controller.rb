@@ -1,7 +1,8 @@
 class CitiesController < ApplicationController
-  # /cities/:id
-  # TODO: mostrar la lista de niveles y el número de centros en cada nivel
+
   def show
-    
+    @levels=School.where("city_id" => params[:id])
+    @levels=@levels.joins(:levels).group("levels.id")
+    @levels=@levels.select("levels.id as id,levels.name as name, count(levels.id) as total")
   end
 end

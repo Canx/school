@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CitiesController do
+describe LevelsController do
 
   describe "GET 'show'" do
     before(:each) do
@@ -10,18 +10,12 @@ describe CitiesController do
       FactoryGirl.create_list(:school, 5, city: @burjassot, levels: [@infantil])
       FactoryGirl.create_list(:school, 10, city: @burjassot, levels: [@secundaria])
     end
-
-    it "returns http success" do
-      get 'show', :id => @burjassot.id
-      response.should be_success
-    end
-
-    it "returns a list of levels and the number of schools in each level" do
-      get 'show', :id => @burjassot.id
-
-      #assigns(:levels).size.should eq(2)
-      assigns(:levels).first.total.should eq(5)
-      assigns(:levels).second.total.should eq(10)
+    
+    context "with level and city param" do
+      it "returns a list of schools from that city and level" do
+        get 'show', :id => @infantil.id, :city_id => @burjassot.id
+        assigns(:schools).count.should eq(5)
+      end
     end
   end
 end

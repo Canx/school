@@ -1,8 +1,12 @@
-When /^I search for schools in "(.*?)" and level "(.*?)"$/ do |city, level|
+When /^I search for schools in "(.*?)"$/ do |city|
   visit search_url
   fill_in('query', :with => city)
-  select(level, :from => 'level')
   click_button('Buscar')
+end
+
+When /^I click on "(.*?)" city$/ do |city_name|
+  id = City.find_by_name(city_name).id
+  click_link("#{id}")
 end
 
 Then /^the results should be:$/ do |expected_results|
@@ -12,6 +16,6 @@ Then /^the results should be:$/ do |expected_results|
       [element.text]
     end
     results << column.flatten
-  end
+  end 
   expected_results.diff!(results.transpose)
 end

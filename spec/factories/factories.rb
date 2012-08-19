@@ -5,17 +5,19 @@ FactoryGirl.define do
     name 'Valencia'
   end
 
-  factory :school do 
-    name 'IES Prueba'
-    city
-  end
-
   factory :level do 
     name 'Primaria'
   end
 
-  factory :schools_level do
-    association :level
-    association :school
+  factory :school do 
+    sequence(:name) { |n| "IES #{n}" }
+    city
+    levels do
+      if Level.count > 0
+        [Level.first]
+      else 
+        [FactoryGirl.create(:level)] 
+      end
+    end
   end
 end

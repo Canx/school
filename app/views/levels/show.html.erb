@@ -1,0 +1,8 @@
+<h1>Centros de <%= @level.name %> en <%= @city.name %></h1>
+<table>
+  <% @schools.each do |school| %>
+    <tr>
+      <td><%= link_to school.name, school_path(school), id: school.id %></td>
+    </tr>
+  <% end %>
+</table>

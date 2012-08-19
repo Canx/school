@@ -1,5 +1,9 @@
 <table>
+  <% @levels.each do |level| %>
   <tr>
-    <td id="name">IES Benicarlo</td>
+    <td class="level" id="<%= level.id %>">
+      <span id="level"><%= level.name %></span>(<span id="total"><%= level.total %></span>)
+    </td>
   </tr>
+  <% end %>
 </table>

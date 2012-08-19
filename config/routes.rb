@@ -1,19 +1,15 @@
 Schooleando::Application.routes.draw do
-  get "school/show"
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
   root :to => 'welcome#index'
 
   match 'search' => 'search#index', :via => :get
   match 'search' => 'search#show', :via => :post
-  #match 'search/:query' => 'search#show', :as => :results
-  #match 'search/city/:id' => 'search#city', :as => :city
  
-  resources :schools
-  resources :cities
-  # TODO: crear ruta /cities/search
+  resources :schools, :only => [:show]
+
+  resources :cities, :only => [:index, :show] do
+    resources :levels, :only => [:index, :show]
+    resources :schools, :only => [:index]
+  end
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

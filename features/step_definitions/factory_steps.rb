@@ -6,10 +6,13 @@ end
 
 Given /^there are the following school profiles:$/ do |schools|
   schools.hashes.each do |school_row|
-    city = FactoryGirl.create(:city, name: school_row[:city])
+    city = City.find_by_name(school_row[:city]) || FactoryGirl.create(:city, name: school_row[:city])
     school_row["city"] = city
-    levels = school_row.delete("levels")
+    levels = school_row["levels"]
+    school_row["levels"] = []
+
     school = FactoryGirl.build(:school, school_row)
+
     unless levels.nil? 
       levels.split(",").map do |level|
           school.levels << Level.find_by_name!(level.strip)

@@ -10,7 +10,6 @@ class SearchController < ApplicationController
 
   private
 
-  # FIXME: si hay 1 sola ciudad en los resultados => redirect_to /cities/:id o /cities/:id?level=:level
   def search_by_city_and_level(city_query, level)
     @schools ||= School
     @level = level
@@ -18,9 +17,9 @@ class SearchController < ApplicationController
       @schools = @schools.joins(:city).where(["cities.name LIKE ?", "#{city_query}%"])
       @schools = @schools.order("cities.name ASC, schools.name ASC")
 
-      if !level.blank?
-        @schools = @schools.joins(:levels).where(:levels => {:id => level})
-      end
+      #if !level.blank?
+      #  @schools = @schools.joins(:levels).where(:levels => {:id => level})
+      #end
 
       if @schools.count > 0 then
         render_cities_or_schools
@@ -40,7 +39,9 @@ class SearchController < ApplicationController
     if @cities.count > 1 then
       render_cities
     else
-      @schools = @schools.page params[:page]
+      # FIXME: si hay 1 sola ciudad en los resultados => redirect_to /cities/:id o /cities/:id?level=:level
+      redirect_to city_path(@schools.first.city)
+      #@schools = @schools.page params[:page]
     end
   end
 
