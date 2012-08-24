@@ -1,50 +1,53 @@
 class SearchController < ApplicationController
-  # mostrar formulario vacío
   def index
   end
 
-  # mostrar resultados de centros
   def show
-    search_by_city_and_level(params[:query],params[:level])
+    alert_if_is_empty params[:query] and return
+    get_schools_from_cities_like params[:query]
+    alert_if_no_schools_found and return
+    redirect_to_city_if_only_one_found and return
+    render_cities
   end
 
   private
 
-  def search_by_city_and_level(city_query, level)
-    @schools ||= School
-    @level = level
-    if !city_query.blank? then
-      @schools = @schools.joins(:city).where(["cities.name LIKE ?", "#{city_query}%"])
-      @schools = @schools.order("cities.name ASC, schools.name ASC")
-
-      #if !level.blank?
-      #  @schools = @schools.joins(:levels).where(:levels => {:id => level})
-      #end
-
-      if @schools.count > 0 then
-        render_cities_or_schools
-      else
-        flash[:error] =  "No se han encontrado centros en #{city_query}"
-        redirect_to :action => "index"
-      end
-
-    else 
-      flash[:error] = "Debes introducir una localidad"
+  def alert_if_is_empty(query)
+    if query.blank? then
+      flash[:alert] = "Debes introducir una localidad"
       redirect_to :action => "index"
-    end
-  end
-
-  def render_cities_or_schools
-    @cities = @schools.group("city_id").count 
-    if @cities.count > 1 then
-      render_cities
+      return true
     else
-      # FIXME: si hay 1 sola ciudad en los resultados => redirect_to /cities/:id o /cities/:id?level=:level
-      redirect_to city_path(@schools.first.city)
-      #@schools = @schools.page params[:page]
+      return false
     end
   end
 
+  def alert_if_no_schools_found
+    if @schools.count == 0 then
+      flash[:alert] = "No se han encontrado centros en #{params[:query]}"
+      redirect_to :action => "index"
+      return true
+    else
+      return false
+    end
+  end
+
+  def get_schools_from_cities_like(city_query)
+    @schools ||= School
+    @schools = @schools.joins(:city).where(["cities.name LIKE ?", "#{city_query}%"])
+    @schools = @schools.order("cities.name ASC, schools.name ASC")
+  end
+
+  def redirect_to_city_if_only_one_found
+    @cities = @schools.group("city_id").count 
+    if @cities.count == 1 then
+      redirect_to city_path(@schools.first.city)
+      return true
+    else
+      return false
+    end
+  end
+     
   def render_cities
     @cities = @cities.map do |city_id, count|
       {:id => city_id, :name => City.find(city_id).name, :count => count }

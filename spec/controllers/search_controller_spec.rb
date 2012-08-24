@@ -12,12 +12,12 @@ describe SearchController do
 
     it "returns error when no query is done" do
       post 'show', :query => ""
-      flash[:error].should_not be_nil
+      flash[:alert].should_not be_nil
     end
 
     it "returns error when no results are found" do
       post 'show', :query => "Madrid"
-      flash[:error].should_not be_nil
+      flash[:alert].should_not be_nil
     end
 
     it "shows a list of posible cities when results are from diferent cities" do
