@@ -1,65 +1,69 @@
 # encoding: utf-8
-require 'csv'
 
-# row[1] -> descripción tipo
-# row[3] -> nombre
-# row[9] -> ciudad
+require "yaml"
 
-fichero = CSV.read("db/centros.csv", encoding: "UTF-8")
-tipos = Hash.new
-ciudades = Hash.new
+Import_Dir = "#{Dir.getwd}/db/import/"
 
-tipos = {"PRIMARIA" => :primaria, "PRIMÀRIA" => :primaria,
-         "SECUNDARIA" => :secundaria, "SECUNDÀRIA" => :secundaria,
-         "INFANTIL" => :infantil,
-         "ADULTES" => :adultos, "ADULTAS" => :adultos,
-         "ESPECIAL" => :especial,
-         "PROFESSIONAL" => :fp, "PROFESIONAL" => :fp, "AGRARIA" => :fp,
-         "ESTRANGER" => :estranjero, "EXTRANJERO" => :estranjero,
-         "MÚSICA" => :musica,
-         "DANSA" => :danza,
-         "DISSENY" => :artes_plasticas, "DISEÑO" => :artes_plasticas,
-         "IDIOMES" => :eoi,
-         "ESCOLA LLAR" => :escuela_hogar,
-         "ESPORTIUS" => :deporte,
-         "RURAL" => :colegio_rural,
-         "PARVULARIO" => :preescolar, "PÀRVULS" => :preescolar, "PREESCOLAR" => :preescolar}
+Niveles =  {
+            :guarderia  => ["Guarderia", nil],
+            :infantil   => ["Infantil", nil],
+            :primaria   => ["Primaria", nil],
+            :eso        => ["ESO", nil],
+            :eso_2ciclo => ["ESO 2do ciclo", :eso],
+            :eso_1ciclo => ["ESO 1er ciclo", :eso],
+            :bachiller  => ["Bachiller", nil],
+            :bachiller_ciencias => ["Bachiller: Ciencias y tecnologia", :bachiller],
+            :bachiller_humanidades => ["Bachiller: Humanidades y ciencias sociales", :bachiller],
+            :bachiller_artes_plasticas => ["Bachiller: Artes plásticas, diseño y imagen", :bachiller],
+            :bachiller_artes_escenicas => ["Bachiller: Artes escénicas, música y danza", :bachiller],
+            :fp         => ["Formacion Profesional", nil]
+           }
 
-levels = { :infantil => "Infantil",
-           :primaria => "Primaria",
-           :secundaria => "Secundaria",
-           :adultos => "Adultos",
-           :eoi => "E.O.I.",
-           :especial => "Educación Especial",
-           :preescolar => "Preescolar",
-           :fp => "Formación Profesional",
-           :artes_plasticas => "Artes Plásticas",
-           :musica => "Música",
-           :danza => "Danza",
-           :deporte => "Escuela deportiva",
-           :colegio_rural => "Colegio rural",
-           :estranjero => "Centro estranjero",
-           :escuela_hogar => "Escuela hogar"}
 
-levels.each do |symbol,level|
-  Level.find_or_create_by_name(level)
-end
+def create_or_update_school(school)
+  ciudad = City.find_or_create_by_name(school[:ciudad])
+  saved_school = School.find_by_name_and_city_id(school[:nombre],ciudad.id)
 
-fichero.each do |row|
-  # Crear centro
-  school = School.new(:name => row[3]) 
-
-  # Crear ciudad
-  ciudad = City.find_or_create_by_name(row[9])
-
-  school.city = ciudad
-
-  tipos.keys.each do |key|
-    if row[1].include? key
-      school.levels << Level.find_by_name(levels[tipos[key]])
-    end 
+  if saved_school
+    puts "updating school #{school[:nombre]}"
+    create_or_update_levels(saved_school, school[:niveles])
+    saved_school.save
+  else
+    puts "creating school #{school[:nombre]}"
+    debugger
+    new_school = School.new(:name => school[:nombre])
+    new_school.city = ciudad
+    create_or_update_levels(new_school, school[:niveles])
+    new_school.save
   end
-     
-  puts "CENTRO:#{row[3]}, DESC:#{row[1]} "
-  school.save!
 end
+
+def create_or_update_levels(school, levels)
+  # TODO: añadir la referencia a los niveles superiores y tener cuidado de añadir primero los niveles superiores!
+  levels.each do |level|
+    if Niveles.has_key?(level)
+      school.levels << Level.find_or_create_by_name(Niveles[level][0])
+    else
+      raise "#{level} key not supported!"
+    end
+  end
+end
+
+def import_school_file(file)
+  schools=YAML.load(File.open(file))
+  schools.each do |school|
+    create_or_update_school(school)
+  end
+end
+
+# procesar todos los archivos *.yml
+def run
+  Dir.entries(Import_Dir).each do |entry|
+    if File.extname(entry) == ".yml"
+      puts "importing #{entry}..."
+      import_school_file Import_Dir + entry
+    end
+  end
+end
+
+run
