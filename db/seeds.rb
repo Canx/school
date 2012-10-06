@@ -16,7 +16,8 @@ Niveles =  {
             :bachiller_humanidades => ["Bachiller: Humanidades y ciencias sociales", :bachiller],
             :bachiller_artes_plasticas => ["Bachiller: Artes plásticas, diseño y imagen", :bachiller],
             :bachiller_artes_escenicas => ["Bachiller: Artes escénicas, música y danza", :bachiller],
-            :fp         => ["Formacion Profesional", nil]
+            :fp         => ["Formacion Profesional", nil],
+            :especial   => ["Educación Especial", nil]
            }
 
 
@@ -26,27 +27,36 @@ def create_or_update_school(school)
 
   if saved_school
     puts "updating school #{school[:nombre]}"
-    create_or_update_levels(saved_school, school[:niveles])
+    find_or_create_levels(saved_school, school[:niveles])
     saved_school.save
   else
     puts "creating school #{school[:nombre]}"
-    debugger
     new_school = School.new(:name => school[:nombre])
     new_school.city = ciudad
-    create_or_update_levels(new_school, school[:niveles])
+    find_or_create_levels(new_school, school[:niveles])
     new_school.save
   end
 end
 
-def create_or_update_levels(school, levels)
-  # TODO: añadir la referencia a los niveles superiores y tener cuidado de añadir primero los niveles superiores!
-  levels.each do |level|
-    if Niveles.has_key?(level)
-      school.levels << Level.find_or_create_by_name(Niveles[level][0])
-    else
-      raise "#{level} key not supported!"
-    end
+def find_or_create_level(level)
+  return if level.nil?
+
+  if !Niveles.has_key?(level)
+    raise "#{level} key not supported!"
   end
+
+  new_level = Level.find_or_initialize_by_name(Niveles[level][0])
+
+  if !new_level.persisted?
+    new_level.parent = find_or_create_level(Niveles[level][1])
+    new_level.save
+  end
+
+  return new_level
+end
+
+def find_or_create_levels(school, levels)
+  levels.each { |level| school.levels << find_or_create_level(level) }
 end
 
 def import_school_file(file)
