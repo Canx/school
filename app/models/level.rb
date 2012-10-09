@@ -5,6 +5,12 @@ class Level < ActiveRecord::Base
   belongs_to :parent, :class_name => "Level", :foreign_key => "parent_id"
   has_many :children, :class_name => "Level", :foreign_key => "parent_id", :inverse_of => :parent
 
+	before_save :check_parent
+	
   scope :base, where(:parent_id => nil)
   attr_accessible :name, :parent
+
+	def check_parent
+		self.parent.nil? or not Level.find(self.parent.id).nil?
+	end
 end
