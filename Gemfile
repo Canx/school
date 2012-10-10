@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.7'
+gem 'rails', '3.2.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -40,7 +40,7 @@ group :test, :development do
 end
 
 group :test do
-  gem 'cucumber-rails', '1.3.0'
+  gem 'cucumber-rails', '1.3.0', :require => false
   gem 'rspec-rails', '2.9.0'
   gem 'database_cleaner', '0.7.2'
   gem 'factory_girl_rails'

@@ -1,19 +1,20 @@
 require 'spec_helper'
 
-describe "levels/show.html.erb" do
+describe "levels/show" do
   context "given a city with schools having different levels" do
     before(:each) do
-      @burjassot = FactoryGirl.create(:city, name: "Burjassot")
-      @infantil = FactoryGirl.create(:level, name: "infantil")
-      @secundaria = FactoryGirl.create(:level, name: "secundaria")
+      @burjassot = create(:city, name: "Burjassot")
+      @infantil = create(:level, name: "infantil")
+      @secundaria = create(:level, name: "secundaria")
 
-      @schools = FactoryGirl.create_list(:school, 5, city: @burjassot, levels: [@infantil])
-      FactoryGirl.create_list(:school, 10, city: @burjassot, levels: [@secundaria])
+      @schools = create_list(:school, 5, city: @burjassot, levels: [@infantil])
+      create_list(:school, 10, city: @burjassot, levels: [@secundaria])
       #@schools = School.joins(:levels).where(:city_id => @burjassot.id).where("levels.id = ?", @infantil.id))
 
       assign(:schools, @schools)
       assign(:city, @burjassot)
       assign(:level, @infantil)
+
       render
     end
 
