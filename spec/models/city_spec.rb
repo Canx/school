@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe City do
-	it "should not allow two cities with the same name" do
-		pending
+  it "should not allow two cities with the same name" do
+    create(:city, :name => "Burjassot")
+    expect { creat(:city, :name => "Burjassot") }.to raise_error
 	end
 end
