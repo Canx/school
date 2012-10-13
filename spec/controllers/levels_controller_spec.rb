@@ -44,9 +44,17 @@ describe LevelsController do
 
   describe "GET 'index'" do
     context "with a city param" do
-      it "returns a list of root levels with schools in that city" do
-        pending
+      before(:each) do
+        get 'index', :city_id => @burjassot.id
       end
+
+      it "returns a list of root levels with schools in that city" do
+        levels = assigns(:levels).map { |l| l.name }
+
+        levels.should include("Infantil","Bachiller")
+        levels.count.should eq(2)
+      end
+
     end
 
     context "without a city param" do

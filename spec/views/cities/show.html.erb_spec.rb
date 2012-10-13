@@ -29,9 +29,4 @@ describe "cities/show" do
 				end
 			end
 		end
-
-		it "shows only top levels" do
-			# TODO: create array with sublevels and test all sublevels
-      rendered.should_not have_selector("td#4")
-		end
 end
