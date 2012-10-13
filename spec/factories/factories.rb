@@ -7,6 +7,7 @@ FactoryGirl.define do
 
   factory :level do 
     name 'Primaria'
+    parent nil
   end
 
   factory :school do 

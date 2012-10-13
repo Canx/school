@@ -1,20 +1,20 @@
 require 'spec_helper'
 
 describe "levels/show" do
-  context "given a city with schools having different levels" do
+  before(:each) do
+    @burjassot = create(:city, name: "Burjassot")
+    @infantil = create(:level, name: "infantil")
+    @secundaria = create(:level, name: "secundaria")
+
+    @schools = create_list(:school, 5, city: @burjassot, levels: [@infantil])
+    create_list(:school, 10, city: @burjassot, levels: [@secundaria])
+  end
+
+  context "city and level without sublevels" do
     before(:each) do
-      @burjassot = create(:city, name: "Burjassot")
-      @infantil = create(:level, name: "infantil")
-      @secundaria = create(:level, name: "secundaria")
-
-      @schools = create_list(:school, 5, city: @burjassot, levels: [@infantil])
-      create_list(:school, 10, city: @burjassot, levels: [@secundaria])
-      #@schools = School.joins(:levels).where(:city_id => @burjassot.id).where("levels.id = ?", @infantil.id))
-
       assign(:schools, @schools)
       assign(:city, @burjassot)
       assign(:level, @infantil)
-
       render
     end
 
@@ -23,12 +23,10 @@ describe "levels/show" do
         rendered.should have_selector("a", id: school.id) 
       end
     end
+  end
 
-    it "shows an error when city doesn't exist" do
-      pending
-    end
-
-    it "shows an error when level doesn't exist" do
+  context "city and level with sublevels" do
+    it "shows a list of sublevels of that level" do
       pending
     end
   end

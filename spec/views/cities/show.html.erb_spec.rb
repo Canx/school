@@ -1,15 +1,14 @@
 require 'spec_helper'
 
 describe "cities/show" do
-  context "querying a city with schools in different levels"
+  context "city with schools in different levels"
     before do
       data = [[1,"infantil",10, nil],[2,"ESO",15, nil],[3,"bachiller",20, nil],[4,"bachiller humanidades",10,3]]
 
       @levels = []
 
-			# TODO: change stub to factory
       data.each do |row|
-        @levels << stub_model(School, :id => row[0], :name => row[1], :total => row[2], :parent_id => row[3])
+        @levels << stub_model(Level, :id => row[0], :name => row[1], :total => row[2], :parent_id => row[3])
       end
 
       @city = stub_model(City, :name => "Burjassot")
