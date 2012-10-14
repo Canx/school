@@ -1,10 +1,6 @@
 class LevelsController < ApplicationController
   def index
-    @levels=School.where("city_id" => params[:city_id])
-    @levels=@levels.joins(:levels)
-    @levels=@levels.where("levels.parent_id IS NULL")
-    @levels=@levels.group("levels.id")
-    @levels=@levels.select("levels.id as id,levels.name as name, count(levels.id) as total")
+    @levels = Level.total_schools_by_city(params[:city_id])
   end
 
   def show

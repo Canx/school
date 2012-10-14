@@ -11,4 +11,10 @@ describe Level do
     level0.delete
     expect { create(:level, :name => "nivel1", :parent => level0) }.to raise_error
   end
+
+  describe ".total_schools_by_city" do
+    it "should return root levels with total schools from a city" do
+      pending
+    end
+  end
 end

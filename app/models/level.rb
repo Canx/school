@@ -13,4 +13,8 @@ class Level < ActiveRecord::Base
 	def check_parent
 		self.parent.nil? or not Level.find(self.parent.id).nil?
 	end
+
+  def self.total_schools_by_city(city_id)
+    Level.base.joins(:schools).where(:schools => {:city_id => city_id}).group("levels.id").select("levels.id, levels.name, count(levels.id) as total")
+  end
 end
