@@ -3,21 +3,21 @@ require 'spec_helper'
 
 describe LevelsController do
   before (:each) do
-    @burjassot = FactoryGirl.create(:city, name: "Burjassot") 
+    @city = FactoryGirl.create(:city, name: "Burjassot") 
     @infantil = FactoryGirl.create(:level, :name => "Infantil") 
     @bachiller = FactoryGirl.create(:level, name: "Bachiller")
     @bachiller_humanistico = FactoryGirl.create(:level, name: "Bachiller humanistico", parent: @bachiller)
     @bachiller_cientifico = FactoryGirl.create(:level, name: "Bachiller cientifico", parent: @bachiller)
 
-    FactoryGirl.create_list(:school, 4, city: @burjassot, levels: [@infantil])
-    FactoryGirl.create_list(:school, 5, city: @burjassot, levels: [@bachiller, @bachiller_humanistico])
-    FactoryGirl.create_list(:school, 6, city: @burjassot, levels: [@bachiller, @bachiller_cientifico])
+    FactoryGirl.create_list(:school, 4, city: @city, levels: [@infantil])
+    FactoryGirl.create_list(:school, 5, city: @city, levels: [@bachiller, @bachiller_humanistico])
+    FactoryGirl.create_list(:school, 6, city: @city, levels: [@bachiller, @bachiller_cientifico])
   end
 
   describe "GET 'show'" do
     context "with level without children and city param" do
       before (:each) do
-        get 'show', :id => @infantil.id, :city_id => @burjassot.id
+        get 'show', :id => @infantil.id, :city_id => @city.id
       end
 
       it "returns all cities with that level" do
@@ -27,16 +27,10 @@ describe LevelsController do
 
     context "with level with children and city param" do
       before (:each) do
-        get 'show', :id => @bachiller.id, :city_id => @burjassot.id
+        get 'show', :id => @bachiller.id, :city_id => @city.id
       end
 
-      it "returns a list of sublevels of that level" do
-        # TODO: crear caso en el que los niveles tengan subniveles.
-        # OPCIONES:
-        #   1.- Mostrar solo subniveles y cantidad de centros en cada subnivel
-        #   2.- Mostrar subniveles y cantidad, y un listado de los centros para el nivel actual.
-        #   3.- Mostrar subniveles y cantidad, un listado de centros para el nivel actual y columnas con los subniveles que tienen.
-
+      it "returns schools and a list of sublevels of that level" do
         pending
       end
     end
@@ -45,7 +39,7 @@ describe LevelsController do
   describe "GET 'index'" do
     context "with a city param" do
       before(:each) do
-        get 'index', :city_id => @burjassot.id
+        get 'index', :city_id => @city.id
       end
 
       it "returns a list of root levels with schools in that city" do
@@ -53,6 +47,10 @@ describe LevelsController do
 
         levels.should include("Infantil","Bachiller")
         levels.count.should eq(2)
+      end
+
+      it "returns a city model" do
+        assigns(:city).name.should eq(@city.name)
       end
 
     end
