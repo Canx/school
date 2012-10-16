@@ -8,9 +8,10 @@ class LevelsController < ApplicationController
 
   def show
     # TODO: check params
-    # FIXME: show sublevels and schools from that level
     @city = City.find(params[:city_id])
     @level = Level.find(params[:id])
+
+    @sublevels = @level.children
 
     @schools = School.where(:city_id => @city.id)
     @schools = @schools.joins(:levels)
