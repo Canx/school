@@ -14,4 +14,13 @@ describe School do
     school.save
     school.should have(1).error_on(:city)
   end
+
+  it "should not allow to have repeated levels for a school" do
+    @level = create(:level, :name => "Bachiller")
+    @school = create(:school, :name => "IES La Vereda", levels: [@level])
+    @school.levels << @level
+    @school.save
+
+    @school.levels.count.should eq(1)
+  end
 end
