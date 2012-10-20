@@ -1,3 +1,4 @@
+
 require 'spec_helper'
 
 
@@ -8,6 +9,7 @@ describe LevelsController do
     @bachiller = FactoryGirl.create(:level, name: "Bachiller")
     @bachiller_humanistico = FactoryGirl.create(:level, name: "Bachiller humanistico", parent: @bachiller)
     @bachiller_cientifico = FactoryGirl.create(:level, name: "Bachiller cientifico", parent: @bachiller)
+    @bachiller_artistico = FactoryGirl.create(:level, name: "Bachiller artistico", parent: @bachiller)
 
     FactoryGirl.create_list(:school, 4, city: @city, levels: [@infantil])
     FactoryGirl.create_list(:school, 5, city: @city, levels: [@bachiller, @bachiller_humanistico])

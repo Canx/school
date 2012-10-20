@@ -10,11 +10,12 @@ class LevelsController < ApplicationController
     # TODO: check params
     @city = City.find(params[:city_id])
     @level = Level.find(params[:id])
-
     @sublevels = @level.children
+    @schools = School.from_city(params[:city_id]).with_level(params[:id])
 
-    @schools = School.where(:city_id => @city.id)
-    @schools = @schools.joins(:levels)
-    @schools = @schools.where(:levels => {:id => @level.id})
+    #TODO: refactorize schools_levels
+    schools_levels = @schools.collect {|s| s.levels}.flatten.uniq
+    @sublevels = @level.children & schools_levels
   end
+
 end
