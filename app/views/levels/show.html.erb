@@ -1,9 +1,9 @@
 <div class="level" id="<%= @level.id %>">
-  <% #TODO: show level, sublevels and navigation links %>
+  <% #TODO: add navigation links %>
   <h1> <%= @level.name %> </h1>
     <% @sublevels.each do |sublevel| %>
       <div class="sublevel" id="<%= sublevel.id %>">
-        <%= sublevel.name %>
+        <%= link_to sublevel.name, city_level_path(@city, sublevel) %>
       </div>
     <% end %>
 </div>

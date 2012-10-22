@@ -29,6 +29,7 @@ describe "levels/show" do
 
   context "city and level with sublevels" do
     before(:each) do
+      @city = mock_model(City, name: "Burjassot")
       @level = mock_model(Level, name: "Bachiller")
       @sublevels = []
       @sublevels << mock_model(Level, name: "Bachiller Humanistico")
@@ -39,7 +40,7 @@ describe "levels/show" do
       assign(:sublevels, @sublevels)
       assign(:schools, @schools)
       assign(:level, @level)
-      assign(:city, mock_model(City, name: "Burjassot"))
+      assign(:city, @city)
 
       render
     end
@@ -47,6 +48,7 @@ describe "levels/show" do
     it "shows a list of sublevels of that level" do
       @sublevels.each do |sublevel|
         rendered.should have_selector("div.sublevel##{sublevel.id}")
+        rendered.should have_link(sublevel.name, href: city_level_path(@city, sublevel))
       end
     end
 
@@ -57,7 +59,7 @@ describe "levels/show" do
     it "shows a list of schools from the specified city and level, with links to schools" do
       @schools.each do |school|
         rendered.should have_selector("div.school##{school.id}")
-        # TODO: inside that selector must be a link to a school
+        rendered.should have_link(school.name, href: school_path(school))
       end
     end
   end
