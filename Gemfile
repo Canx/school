@@ -33,6 +33,7 @@ group :development do
   gem 'guard-rspec'
   gem 'libnotify'
   gem 'yard'
+  gem 'rails_best_practices'
 end
 
 group :test, :development do
