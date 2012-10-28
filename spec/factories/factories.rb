@@ -12,6 +12,8 @@ FactoryGirl.define do
 
   factory :school do 
     sequence(:name) { |n| "IES #{n}" }
+    sequence(:code) { |n| "#{n}" }
+
     city
     levels do
       if Level.count > 0

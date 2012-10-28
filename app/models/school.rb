@@ -3,9 +3,10 @@ class School < ActiveRecord::Base
   belongs_to :city
 
   validates :city, :presence => true
-  validates :name, :presence => true, :uniqueness => true
+  validates :name, :presence => true
+  validates :code, :presence => true, :uniqueness => true
 
-  attr_accessible :name, :city
+  attr_accessible :name, :city, :phone, :address
 
   scope :from_city, lambda { |city_id| School.where(city_id: city_id) }
   scope :with_level, lambda { |level_id| School.joins(:levels).where(levels: {id: level_id}) }

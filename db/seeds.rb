@@ -149,32 +149,38 @@ Niveles =  {
 
 
 def create_or_update_school(school)
-ciudad = City.find_or_create_by_name(school[:ciudad])
-saved_school = School.find_by_name_and_city_id(school[:nombre],ciudad.id)
+  current_school = School.find_by_code(school[:codigo])
 
-if saved_school
-  puts "updating school #{school[:nombre]}"
-  find_or_create_levels(saved_school, school[:niveles])
-  saved_school.save
-else
-  puts "creating school #{school[:nombre]}"
-  new_school = School.new(:name => school[:nombre])
-  new_school.city = ciudad
-  find_or_create_levels(new_school, school[:niveles])
-  new_school.save
+  if current_school.nil? then
+    puts "creating school #{school[:nombre]}"
+    current_school = School.new
+  else
+    puts "updating school #{school[:nombre]}"
+  end
+
+  update_school_fields(current_school, school)
+  current_school.save!
 end
+
+def update_school_fields(new_school, school)
+  new_school.code = school[:codigo]
+  new_school.name = school[:nombre]
+  new_school.city = City.find_or_create_by_name(school[:ciudad])
+  new_school.levels = find_or_create_levels(new_school, school[:niveles])
+  new_school.phone = school[:telefono]
+  new_school.address = school[:direccion]
 end
 
 def find_or_create_level(level)
-return if level.nil?
+  return if level.nil?
 
-if !Niveles.has_key?(level)
-  raise "#{level} key not supported!"
-end
+  if !Niveles.has_key?(level)
+    raise "#{level} key not supported!"
+  end
 
-new_level = Level.find_or_initialize_by_name(Niveles[level][0])
+  new_level = Level.find_or_initialize_by_name(Niveles[level][0])
 
-if !new_level.persisted?
+  if !new_level.persisted?
     new_level.parent = find_or_create_level(Niveles[level][1])
     new_level.save
   end
@@ -183,7 +189,7 @@ if !new_level.persisted?
 end
 
 def find_or_create_levels(school, levels)
-  levels.each { |level| school.levels << find_or_create_level(level) }
+  levels.collect { |level| find_or_create_level(level) }
 end
 
 def import_school_file(file)
