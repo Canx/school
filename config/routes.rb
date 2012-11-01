@@ -4,12 +4,9 @@ Schooleando::Application.routes.draw do
   match 'search' => 'search#index', :via => :get
   match 'search' => 'search#show', :via => :post
  
-  resources :schools, :only => [:show]
-
-  resources :cities, :only => [:index, :show] do
-    resources :levels, :only => [:index, :show]
-    resources :schools, :only => [:index]
-  end
+  resources :schools, :only => [:index, :show]
+  resources :levels, :only => [:index, :show]
+  resources :cities, :only => [:index, :show]
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

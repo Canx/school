@@ -1,19 +1,16 @@
-<% #TODO: show list of nearest schools with the same level in other cities %>
 <div class="level" id="<%= @level.id %>">
-  <% #TODO: add navigation links %>
+  <% # TODO: create title based on actual filter %>
   <h1> <%= @level.name %> </h1>
-    <% @sublevels.each do |sublevel| %>
-      <div class="sublevel" id="<%= sublevel.id %>">
-        <%= link_to sublevel.name, city_level_path(@city, sublevel) %>
-      </div>
-    <% end %>
+  <ul>
+    <% # TODO: pass filter to partial to create sublevel link %>
+    <%= render partial: "levels/list", locals: { levels: @sublevels, filter: @filter, filtered_levels: @filtered_levels } %>
+  </ul>
 </div>
 
 <div id="schools">
-  <h2><%= "#{@city.name}: centros de #{@level.name}" %></h2>
+  <% # TODO: create title based on actual filter %>
+  <h2><%= "centros de #{@filter}" %></h2>
   <% @schools.each do |school| %>
-    <div class="school" id="<%= school.id %>">
-      <%= link_to school.name, school_path(school), id: school.id %>
-    </div>
+    <%= render partial: "schools/school", locals: { school: school, filter: @filter } %>
   <% end %>
 </div>

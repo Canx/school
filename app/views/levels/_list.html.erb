@@ -1,0 +1,4 @@
+<% #TODO: a este partial se le pasa filter, que contiene los filtros utilizados, filtered_levels (que contiene todos los niveles a mostrar) %>
+<% levels.each do |level| %>
+  <%= render partial: 'levels/level', locals: { level: level, filter: filter, filtered_levels: filtered_levels } %>
+<% end %>

@@ -1,1 +1,3 @@
-<h1>cities_show redirige de momento a city_levels. Esto no debería verse</h1>
+<h1><%= @city.name %></h1>
+<% # TODO: render partial to levels, passing filter params %>
+<%= render partial: "levels/list", locals: { levels: @levels, filter: @filter, filtered_levels: @filtered_levels } %>

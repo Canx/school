@@ -1,0 +1,13 @@
+<% # TODO: create link passing filter %>
+<li><%= link_to level.name, level_path(level, filter) %>
+<% # TODO: extract logic to view helper %>
+<% if !level.children.nil? %>
+  <ul>
+  <% level.children.each do |sublevel| %>
+    <% if filtered_levels.nil? or filtered_levels.include?(sublevel) %>
+      <%= render partial: 'levels/level', locals: { level: sublevel, filter: filter, filtered_levels: filtered_levels } %>
+    <% end %>
+  <% end %>
+  </ul>
+<% end %>
+</li>

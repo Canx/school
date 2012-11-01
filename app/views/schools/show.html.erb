@@ -15,8 +15,9 @@
 <div class="levels">
   <h2>Niveles:</h2>
   <ul>
-  <% @school.levels.each do |level| %>
-    <li><%= level.name %></li>
-  <% end %>
+    <% # TODO: follow demeter law and extract logic to view helper %>
+    <% @school.levels.base.each do |level| %>
+      <%= render partial: 'levels/level', locals: { level: level, filter: @filter, filtered_levels: @school.levels } %>
+    <% end %>
   </ul>
 </div>

@@ -1,6 +1,11 @@
 class CitiesController < ApplicationController
 
   def show
-    redirect_to city_levels_url(params[:id])
+    @city = City.find(params[:id])
+    @levels = Level.total_schools_by_city(params[:id])
+
+    # TODO: add previous applied filters
+    @filter = { city_id: params[:id] }
+    @filtered_levels = Level.find_by_city(params[:id])
   end
 end

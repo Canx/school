@@ -17,8 +17,20 @@ class Level < ActiveRecord::Base
   def self.total_schools_by_city(city_id)
     Level.base.
           joins(:schools).
-          where(:schools => {:city_id => city_id}).
+          where(:schools => { city_id: city_id }).
           group("levels.id").
           select("levels.id, levels.name, count(levels.id) as total")
+  end
+
+  def self.find_by_filter(filter)
+    result = self 
+    if !filter[:city_id].nil?
+      result = result.find_by_city(filter[:city_id])
+    end
+  end
+
+  def self.find_by_city(city_id)
+    Level.joins(:schools).
+         where(:schools => { city_id: city_id })
   end
 end
