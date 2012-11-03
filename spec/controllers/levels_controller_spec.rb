@@ -35,7 +35,6 @@ describe LevelsController do
 
       it "returns schools and a list of sublevels of that level" do
         assigns(:level).should eq(@bachiller)
-        assigns(:city).should eq(@city)
         assigns(:sublevels).should include(@bachiller_cientifico, @bachiller_humanistico)
         assigns(:sublevels).size.should eq(2)
         assigns(:schools).size.should eq(18)
@@ -46,11 +45,10 @@ describe LevelsController do
   describe "GET 'index'" do
     context "with a city param" do
       before(:each) do
-        get 'index', :city_id => @city.id
+        get 'index', filter: { city_id: @city.id }
       end
 
       it "returns a list of root levels with schools in that city" do
-        assigns(:city).should eq(@city)
         assigns(:levels).should include(@infantil, @bachiller)
         assigns(:levels).size.should eq(2)
       end

@@ -23,9 +23,10 @@ class Level < ActiveRecord::Base
   end
 
   def self.find_by_filter(filter)
-    result = self 
+    return if filter.nil?
+
     if !filter[:city_id].nil?
-      result = result.find_by_city(filter[:city_id])
+      find_by_city(filter[:city_id])
     end
   end
 

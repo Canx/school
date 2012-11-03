@@ -11,4 +11,11 @@ class School < ActiveRecord::Base
   scope :from_city, lambda { |city_id| School.where(city_id: city_id) }
   scope :with_level, lambda { |level_id| School.joins(:levels).where(levels: {id: level_id}) }
 
+  def self.find_by_filter(filter)
+    param_scope = [[:level_id, "with_level"], [:city_id, "from_city"]]
+
+    param_scope.inject(self) do |query, (param,scope)|
+      !filter[param].nil? ? query.send(scope,filter[param]) : query 
+    end
+  end
 end

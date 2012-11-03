@@ -1,12 +1,3 @@
-<h1><%= @city.name %></h1>
-<table>
-  <% # TODO: render partial "levels" %>
-  <% @levels.each do |level| %>
-  <tr>
-    <td class="level" id="<%= level.id %>">
-      <span id="level"><%= link_to level.name, city_level_path(@city, level) %></span>(<span id="total"><%= level.total %></span>)
-    </td>
-  </tr>
-  <% end %>
-</table>
+<h1>TODO: AQUI VA UN TITULO BASADO EN EL FILTRO</h1>
+<%= render partial: 'levels/list', locals: { levels: @levels, filter: @filter, filtered_levels: @filtered_levels } %>
 <% #TODO: show all schools from city ordered by name? %>

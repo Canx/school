@@ -8,8 +8,12 @@ describe CitiesController do
       get 'show', id: @city.id
     end
 
-    it "should redirect to city levels page" do
-      response.should redirect_to(city_levels_url(city_id: @city.id)) 
+    it "should show the city name" do
+      pending
+    end
+
+    it "should return all levels that can be studied in city" do
+      pending
     end
   end
 end

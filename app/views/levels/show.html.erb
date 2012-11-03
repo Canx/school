@@ -9,7 +9,7 @@
 
 <div id="schools">
   <% # TODO: create title based on actual filter %>
-  <h2><%= "centros de #{@filter}" %></h2>
+  <h2><%= "Centros" %></h2>
   <% @schools.each do |school| %>
     <%= render partial: "schools/school", locals: { school: school, filter: @filter } %>
   <% end %>

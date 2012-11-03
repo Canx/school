@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "levels/index" do
-  context "city with schools in root levels" do
+  context "with param city with schools in root levels" do
     before do
       @levels = []
       @levels << stub_model(Level, id: 1, name: "infantil", total: 5, parent_id: nil)
@@ -12,17 +12,18 @@ describe "levels/index" do
 
       assign(:levels, @levels)
       assign(:city, @city)
-      assign(:city_id, @city.id)
+      assign(:filter, { city_id: @city.id})
 
       render
     end
 
-    it "shows a list of root levels with links to sublevels" do
+    it "shows a list of root levels with links to sublevels from that city" do
       @levels.each do |level|
         rendered.should have_selector("td##{level.id}") do |td|
           td.should contain(level.id)
           td.should contain(level.total)
-          td.should have_selector("a", href: city_level(1, level))
+          # TODO: test params (?city_id=n)
+          td.should have_selector("a", href: level(1, level))
         end
       end
     end
