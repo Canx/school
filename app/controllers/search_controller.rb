@@ -4,9 +4,12 @@ class SearchController < ApplicationController
 
   def show
     alert_if_is_empty params[:query] and return
+
     get_schools_from_cities_like params[:query]
+
     alert_if_no_schools_found and return
     redirect_to_city_if_only_one_found and return
+
     render_cities
   end
 
@@ -35,7 +38,7 @@ class SearchController < ApplicationController
   def get_schools_from_cities_like(city_query)
     @schools ||= School
     @schools = @schools.joins(:city).where(["cities.name LIKE ?", "#{city_query}%"])
-    @schools = @schools.order("cities.name ASC, schools.name ASC")
+    #@schools = @schools.order("cities.name ASC, schools.name ASC")
   end
 
   def redirect_to_city_if_only_one_found
