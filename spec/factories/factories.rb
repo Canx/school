@@ -10,10 +10,12 @@ FactoryGirl.define do
     parent nil
   end
 
-  factory :school do 
-    sequence(:name) { |n| "IES #{n}" }
-    sequence(:code) { |n| "#{n}" }
+  sequence(:name) { |n| "IES #{n}" }
+  sequence(:code) { |n| "#{n}" }
 
+  factory :school do
+    name { FactoryGirl.generate(:name) }
+    code { FactoryGirl.generate(:code) }
     city
     levels do
       if Level.count > 0
