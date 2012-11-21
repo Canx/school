@@ -52,11 +52,6 @@ describe LevelsController do
         assigns(:levels).should include(@infantil, @bachiller)
         assigns(:levels).size.should eq(2)
       end
-
-      it "returns a city model" do
-        assigns(:city).name.should eq(@city.name)
-      end
-
     end
 
     context "without a city param" do
