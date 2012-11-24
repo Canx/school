@@ -1,0 +1,11 @@
+<div id="schools">
+  <h2>Centros</h2>
+  <ul>
+  <% @schools.each do |school| %>
+    <li>
+    <%= link_to school_path(school[:id]) do %>
+      <%= school[:name] %>
+    <% end %>
+    </li>
+  <% end %>
+</div>

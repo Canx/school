@@ -1,0 +1,11 @@
+<div id="cities">
+  <h2>Ciudades</h2>
+  <ul>
+  <% @cities.each do |city| %>
+    <li>
+    <%= link_to city_path(city[:id]) do %>
+      <%= city[:name] %>
+    <% end %>
+    </li>
+  <% end %>
+</div>

@@ -1,0 +1,11 @@
+<div id="levels">
+  <h2>Niveles</h2>
+  <ul>
+  <% @levels.each do |level| %>
+    <li>
+    <%= link_to level_path(level[:id]) do %>
+      <%= level[:name] %>
+    <% end %>
+    </li>
+  <% end %>
+</div>

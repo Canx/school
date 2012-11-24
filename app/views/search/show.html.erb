@@ -1,23 +1,5 @@
 <%= render 'form' %>
 
-<% if not(@schools.nil?) then %>
-<table id="results" class="table table-striped">
-  <thead>
-    <tr>
-      <th>Centro</th>
-      <th>Ciudad</th>
-      <th>Perfil</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @schools.each do |school| %>
-    <tr>
-      <td id="name"><%= school.name %></td>
-      <td id="city"><%= school.city.name unless school.city.nil? %></td>
-      <td><%= link_to "Ver", school_path(school) %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-<%= paginate @schools %>
-<% end %>
+<%= render 'cities' if @cities.size > 0 %>
+<%= render 'schools' if @schools.size > 0 %>
+<%= render 'levels' if @levels.size > 0 %>

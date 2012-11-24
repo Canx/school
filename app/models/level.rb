@@ -8,6 +8,8 @@ class Level < ActiveRecord::Base
 	before_save :check_parent
 	
   scope :base, where(:parent_id => nil)
+  scope :like, lambda { |query| Level.where(["name LIKE ?", "%#{query}%"]) }
+
   attr_accessible :name, :parent
 
 	def check_parent
