@@ -1,3 +1,5 @@
 == Schooleando
 
 Busca, compara y opina sobre los colegios y institutos de tu zona.
+
+http://schooleando.herokuapp.com
