@@ -9,6 +9,8 @@ class Level < ActiveRecord::Base
 	
   scope :base, where(:parent_id => nil)
   scope :like, lambda { |query| Level.where(["name LIKE ?", "%#{query}%"]) }
+  scope :from_city, lambda { |city_id| Level.joins(:schools).where(:schools => { city_id: city_id }) }
+
 
   attr_accessible :name, :parent
 
@@ -25,15 +27,10 @@ class Level < ActiveRecord::Base
   end
 
   def self.find_by_filter(filter)
-    return if filter.nil?
+    param_scope = [[:city_id, "from_city"], [:query, "like"]]
 
-    if !filter[:city_id].nil?
-      find_by_city(filter[:city_id])
+    param_scope.inject(self) do |query, (param,scope)|
+      !filter[param].nil? ? query.send(scope,filter[param]) : query 
     end
-  end
-
-  def self.find_by_city(city_id)
-    Level.joins(:schools).
-         where(:schools => { city_id: city_id })
   end
 end

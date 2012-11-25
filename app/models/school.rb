@@ -13,7 +13,7 @@ class School < ActiveRecord::Base
   scope :like, lambda { |query| School.where(["name LIKE ?", "%#{query}%"]) }
 
   def self.find_by_filter(filter)
-    param_scope = [[:level_id, "with_level"], [:city_id, "from_city"]]
+    param_scope = [[:level_id, "with_level"], [:city_id, "from_city"], [:query, "like"]]
 
     param_scope.inject(self) do |query, (param,scope)|
       !filter[param].nil? ? query.send(scope,filter[param]) : query 
