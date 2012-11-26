@@ -14,15 +14,16 @@ class SearchController < ApplicationController
   private
 
   def find_results
-    @city = City.find(params[:city_id]) if params[:city_id]
-    @cities = []
-    @cities = City.find_by_filter(params) if params[:city_id].nil? 
+    @city = params[:city_id] ? City.find(params[:city_id]) : nil
+    @cities = City.find_by_filter(params) if params[:city_id].nil?
+    @cities = nil if @cities == City
 
-    @level = Level.find(params[:level_id]) if params[:level_id]
-    @levels = []
+    @level = params[:level_id] ? Level.find(params[:level_id]) : nil
     @levels = Level.find_by_filter(params) if params[:level_id].nil?
+    @levels = nil if @levels == Level
 
     @schools = School.find_by_filter params
+    @schools = nil if @schools == School
   end
 
   def alert_if_is_empty(query)

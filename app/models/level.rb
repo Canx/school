@@ -9,7 +9,7 @@ class Level < ActiveRecord::Base
 	
   scope :base, where(:parent_id => nil)
   scope :like, lambda { |query| Level.where(["name LIKE ?", "%#{query}%"]) }
-  scope :from_city, lambda { |city_id| Level.joins(:schools).where(:schools => { city_id: city_id }) }
+  scope :from_city, lambda { |city_id| Level.joins(:schools).where(:schools => { city_id: city_id }).uniq }
 
 
   attr_accessible :name, :parent

@@ -2,6 +2,6 @@
   <h2>Ciudades</h2>
   <ul>
   <% @cities.each do |city| %>
-    <li><%= link_to city[:name], search_path(city_id: city[:id]) %></li>
+    <li><%= link_to city[:name], search_path({city_id: city[:id], level_id: @level }) %></li>
   <% end %>
 </div>

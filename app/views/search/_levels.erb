@@ -2,6 +2,6 @@
   <h2>Niveles</h2>
   <ul>
   <% @levels.each do |level| %>
-    <li><%= link_to level[:name], search_path(level_id: level[:id]) %></li>
+    <li><%= link_to level[:name], search_path({level_id: level[:id], city_id: @city }) %></li>
   <% end %>
 </div>

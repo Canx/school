@@ -1,0 +1,4 @@
+<div id="level">
+  <%= "NIVEL: #{@level.name}" %>
+  <%= link_to "Borrar", search_path(params.except(:level_id)) %>
+</div>

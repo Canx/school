@@ -1,5 +1,6 @@
-<%= "CIUDAD: #{@city.name}" if !@city.nil? %>
-<%= "NIVEL: #{@level.name}" if !@level.nil? %>
+<%= render "city"  if !@city.nil? %>
+<%= render "level" if !@level.nil? %>
+
 <%= form_tag(search_url, :method => "post") do %>
   <%= search_field_tag("query", params[:query]) %>
   <%= submit_tag "Buscar" %>

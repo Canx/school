@@ -1,0 +1,4 @@
+<div id="city">
+  <%= "CIUDAD: #{@city.name}" %>
+  <%= link_to "Borrar", search_path(params.except(:city_id)) %>
+</div>
