@@ -1,11 +1,19 @@
 <div id="schools">
   <h2>Centros</h2>
-  <ul>
-  <% @schools.each do |school| %>
-    <li>
-    <%= link_to school_path(school[:id]) do %>
-      <%= school[:name] %>
-    <% end %>
-    </li>
-  <% end %>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Ciudad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @schools.each do |school| %>
+      <tr>
+        <td><%= link_to school.name, school_path(school.id) %></td>
+        <td><%= school.city.name %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
