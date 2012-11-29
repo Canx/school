@@ -171,6 +171,7 @@ def update_school_fields(new_school, school)
   new_school.address = school[:direccion]
   new_school.long = school[:longitud] != "0" ? school[:longitud].to_f : nil
   new_school.lat = school[:latitud] != "0" ? school[:latitud].to_f : nil
+  new_school.public = school[:publico]
 end
 
 def find_or_create_level(level)
