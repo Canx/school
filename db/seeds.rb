@@ -5,8 +5,8 @@ require "yaml"
 Import_Dir = "#{Dir.getwd}/db/import/"
 
 Niveles =  {
-            :guarderia  => ["Guarderia", nil],
-            :infantil   => ["Infantil", nil],
+            :infantil_1  => ["Infantil (1er ciclo)", nil],
+            :infantil_2   => ["Infantil (2do ciclo)", nil],
             :primaria   => ["Primaria", nil],
             :eso        => ["ESO", nil],
             :eso_2ciclo => ["ESO 2do ciclo", :eso],
