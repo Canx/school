@@ -7,8 +7,11 @@ class SearchController < ApplicationController
 
   # En show se procesa query, debe ser obligatorio
   def show
-    alert_if_is_empty params[:query] and return
+    redirect_to "index", alert: "Debes introducir una ciudad" if params[:query].blank?
     find_results
+
+    # FIXME: no se visualiza, test falla
+    redirect_to "index", alert: "No se han encontrado centros" if @schools.nil?
   end
 
   private
@@ -24,15 +27,5 @@ class SearchController < ApplicationController
 
     @schools = School.find_by_filter params
     @schools = nil if @schools == School
-  end
-
-  def alert_if_is_empty(query)
-    if query.blank? then
-      flash[:alert] = "Debes introducir una ciudad"
-      redirect_to :action => "index"
-      return true
-    else
-      return false
-    end
   end
 end
