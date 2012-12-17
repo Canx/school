@@ -21,6 +21,7 @@ class SearchController < ApplicationController
     @cities = City.find_by_filter(params) if params[:city_id].nil?
     @cities = nil if @cities == City
 
+    # TODO: Si se ha pasado el nivel hay que buscar los subniveles!
     @level = params[:level_id] ? Level.find(params[:level_id]) : nil
     @levels = Level.find_by_filter(params) if params[:level_id].nil?
     @levels = nil if @levels == Level

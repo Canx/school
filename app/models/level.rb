@@ -33,4 +33,8 @@ class Level < ActiveRecord::Base
       !filter[param].nil? ? query.send(scope,filter[param]) : query 
     end
   end
+
+  def root?
+    !(Level.base & [self]).empty?
+  end
 end
