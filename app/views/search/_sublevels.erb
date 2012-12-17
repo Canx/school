@@ -1,0 +1,12 @@
+<ul>
+<% current_levels.each do |level| %>
+  <li>
+    <% if !(levels & [level]).empty? %>
+    <%= link_to level[:name], search_path({level_id: level[:id], city_id: @city }) %>
+    <% else %>
+    <%= level[:name] %>
+    <% end %>
+    <%= render partial: 'sublevels', locals: { levels: levels, current_levels: level.children & levels } %>
+  </li>
+<% end %>
+</ul>
