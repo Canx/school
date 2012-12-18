@@ -1,21 +1,18 @@
-<div id="schools">
-  <h2>Centros</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Ciudad</th>
-        <th>Público</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @schools.each do |school| %>
-      <tr>
-        <td><%= link_to school.name, school_path(school.id) %></td>
-        <td><%= school.city.name %></td>
-        <td><%= tag(:i, class: school.public ? "icon-ok" : "icon-remove") %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Ciudad</th>
+      <th>Público</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @schools.each do |school| %>
+    <tr>
+      <td><%= link_to school.name, school_path(school.id) %></td>
+      <td><%= school.city.name %></td>
+      <td><%= tag(:i, class: school.public ? "icon-ok" : "icon-remove") %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,5 +1,19 @@
 <%= render 'form' %>
 
-<%= render 'cities' if @cities %>
-<%= render 'levels' if @levels %>
-<%= render 'schools' if @schools %>
+<ul class="nav nav-tabs" id="results">
+  <% if @cities %><li><a href="#cities" data-toggle="tab">Ciudades</a></li><% end %>
+  <% if @levels %><li><a href="#levels" data-toggle="tab">Niveles</a></li><% end %>
+  <% if @schools %><li><a href="#schools" data-toggle="tab">Centros</a></li><% end %>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane" id="cities">
+    <%= render 'cities' if @cities %>
+  </div>
+  <div class="tab-pane" id="levels">
+    <%= render 'levels' if @levels %>
+  </div>
+  <div class="tab-pane" id="schools">
+    <%= render 'schools' if @schools %>
+  </div>
+</div>

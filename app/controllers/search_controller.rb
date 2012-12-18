@@ -3,6 +3,7 @@ class SearchController < ApplicationController
   def index
     params.delete(:query)
     find_results
+    render "show"
   end
 
   # En show se procesa query, debe ser obligatorio
