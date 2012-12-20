@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require "yaml"
+require "open-uri"
 
 Import_Dir = "#{Dir.getwd}/db/import/"
 
@@ -196,20 +197,26 @@ def find_or_create_levels(school, levels)
 end
 
 def import_school_file(file)
-  schools=YAML.load(File.open(file))
+  schools=YAML.load(open(file))
   schools.each do |school|
     create_or_update_school(school)
   end
 end
 
 # procesar todos los archivos *.yml
-def run
-  Dir.entries(Import_Dir).each do |entry|
-    if File.extname(entry) == ".yml"
-      puts "importing #{entry}..."
-      import_school_file Import_Dir + entry
+def run(args)
+  url = args[:url]
+
+  if url
+    import_school_file(url)
+  else
+    Dir.entries(Import_Dir).each do |entry|
+      if File.extname(entry) == ".yml"
+        puts "importing #{entry}..."
+        import_school_file Import_Dir + entry
+      end
     end
   end
 end
 
-run
+run url: ENV["URL"]
