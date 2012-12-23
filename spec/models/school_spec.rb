@@ -6,10 +6,10 @@ describe School do
     expect { build(:school, :code => "12345") }.to raise_error
   end
 
-  it "should not allow a school without name" do
+  it "should allow a school without name" do
     school = build(:school, :name => nil)
     school.save
-    school.should have(1).error_on(:name)
+    school.should have(0).error_on(:name)
   end
 
   it "should not allow a school without city" do

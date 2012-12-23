@@ -3,7 +3,6 @@ class School < ActiveRecord::Base
   belongs_to :city
 
   validates :city, :presence => true
-  validates :name, :presence => true
   validates :code, :presence => true, :uniqueness => true
 
   attr_accessible :name, :city, :phone, :address

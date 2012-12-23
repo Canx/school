@@ -2,10 +2,13 @@
 
 require "yaml"
 require "open-uri"
+require "zlib"
 
 Import_Dir = "#{Dir.getwd}/db/import/"
 
 Niveles =  {
+            :jardin_inf => ["Jardín de infancia", nil],
+            :parvulos => ["Parvulos", nil],
             :infantil_1  => ["Infantil (1er ciclo)", nil],
             :infantil_2   => ["Infantil (2do ciclo)", nil],
             :primaria   => ["Primaria", nil],
@@ -144,8 +147,8 @@ Niveles =  {
             :fp_ciclo_audiologia_protesica => ["AUDIOLOGÍA PROTÈSICA", :fp],
             :fp_ciclo_produccion_indust_grafica => ["PRODUCCIÓ EN INDUSTRIES D'ARTS GRÀFIQUES", :fp],
             :fp_ciclo_instal_electrotecnicas => ["INSTAL·LACIONS ELECTROTÈCNIQUES", :fp],
-            :fp_ciclo_proyectos_construccion => ["DESENVOLUPAMENT I APLICACIÓ DE PROJECTES DE CONSTRUCCIÓ", :fp]
-
+            :fp_ciclo_proyectos_construccion => ["DESENVOLUPAMENT I APLICACIÓ DE PROJECTES DE CONSTRUCCIÓ", :fp],
+            :fp_modulos => ["MODULOS DE FP", :fp]
          }
 
 
@@ -197,7 +200,9 @@ def find_or_create_levels(school, levels)
 end
 
 def import_school_file(file)
-  schools=YAML.load(open(file))
+  source = open(file)
+  gz = Zlib::GzipReader.new(source)
+  schools=YAML.load(gz.read)
   schools.each do |school|
     create_or_update_school(school)
   end
