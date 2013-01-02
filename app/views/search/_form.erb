@@ -2,6 +2,6 @@
 <%= render "level" if !@level.nil? %>
 
 <%= form_tag(search_url, :method => "post") do %>
-  <%= search_field_tag("query", params[:query], {placeholder: "Ciudad, Nivel o Centro"}) %>
+  <input id="query" class="input-medium search-query" name="query" placeholder="Ciudad, Nivel o Centro" type="search" />
   <%= submit_tag "Buscar" %>
 <% end %> 
