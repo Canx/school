@@ -118,11 +118,12 @@ GEM
       addressable (~> 2.3)
     less (2.2.2)
       commonjs (~> 0.2.6)
-    less-rails (2.2.3)
+    less-rails (2.2.6)
       actionpack (>= 3.1)
       less (~> 2.2.0)
     libnotify (0.8.0)
       ffi (>= 1.0.11)
+    libv8 (3.11.8.4)
     libwebsocket (0.1.7.1)
       addressable
       websocket
@@ -251,6 +252,7 @@ DEPENDENCIES
   kaminari
   less-rails
   libnotify
+  libv8 (~> 3.11.8)
   pg
   rails (= 3.2.8)
   rails_best_practices
